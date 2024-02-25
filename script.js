@@ -31,6 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
         canvas.addEventListener("mouseup", () => isDrawing && stopDrawing());
         canvas.addEventListener("mouseout", () => isDrawing && stopDrawing());
 
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startDrawing(e.touches[0]);
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            draw(e.touches[0]);
+        });
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchcancel', stopDrawing);
+
         function draw(e) {
           if (!isDrawing) return;
 
@@ -53,19 +64,5 @@ document.addEventListener("DOMContentLoaded", () => {
         function stopDrawing() {
           isDrawing = false;
           ctx.beginPath();
-        }
-
-        function clearSignature() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function downloadSignature() {
-          const dataURL = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = dataURL;
-          link.download = "signature.png";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
         }
       });
