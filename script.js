@@ -2,9 +2,9 @@ function clearSignature() {
     const canvas = document.getElementById("signatureCanvas");
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+}
 
-  function downloadSignature() {
+function downloadSignature() {
     const canvas = document.getElementById("signatureCanvas");
     const dataURL = canvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -13,11 +13,30 @@ function clearSignature() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
+}
 
-      
-      
-  document.addEventListener('DOMContentLoaded', () => {
+function startDrawing(e) {
+    isDrawing = true;
+    draw(e);
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+
+    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('signatureCanvas');
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
@@ -39,24 +58,6 @@ function clearSignature() {
 
     canvas.addEventListener('touchend', stopDrawing);
     canvas.addEventListener('touchcancel', stopDrawing);
-
-    function startDrawing(e) {
-        isDrawing = true;
-        draw(e);
-    }
-
-    function draw(e) {
-        if (!isDrawing) return;
-
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
-
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-    }
 
     function stopDrawing() {
         isDrawing = false;
