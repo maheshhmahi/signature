@@ -17,52 +17,49 @@ function clearSignature() {
 
       
       
-document.addEventListener("DOMContentLoaded", () => {
-        const canvas = document.getElementById("signatureCanvas");
-        const ctx = canvas.getContext("2d");
-        let isDrawing = false;
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
 
-        canvas.addEventListener("mousedown", (e) => {
-          isDrawing = true;
-          draw(e);
-        });
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
 
-        canvas.addEventListener("mousemove", draw);
-        canvas.addEventListener("mouseup", () => isDrawing && stopDrawing());
-        canvas.addEventListener("mouseout", () => isDrawing && stopDrawing());
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startDrawing(e.touches[0]);
+    });
 
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            startDrawing(e.touches[0]);
-        });
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            draw(e.touches[0]);
-        });
-        canvas.addEventListener('touchend', stopDrawing);
-        canvas.addEventListener('touchcancel', stopDrawing);
+    canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        draw(e.touches[0]);
+    });
 
-        function draw(e) {
-          if (!isDrawing) return;
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
 
-          ctx.lineWidth = 2;
-          ctx.lineCap = "round";
-          ctx.strokeStyle = "#000";
+    function startDrawing(e) {
+        isDrawing = true;
+        draw(e);
+    }
 
-          ctx.lineTo(
-            e.clientX - canvas.offsetLeft,
-            e.clientY - canvas.offsetTop
-          );
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(
-            e.clientX - canvas.offsetLeft,
-            e.clientY - canvas.offsetTop
-          );
-        }
+    function draw(e) {
+        if (!isDrawing) return;
 
-        function stopDrawing() {
-          isDrawing = false;
-          ctx.beginPath();
-        }
-      });
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+});
