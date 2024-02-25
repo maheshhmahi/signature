@@ -8,8 +8,11 @@ body {
 
   .signature-container {
     text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   canvas {
     border: 1px solid #000;
+    width: 100%;
   }

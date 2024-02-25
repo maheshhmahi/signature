@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signature Pad</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="signature-container">
       <canvas id="signatureCanvas" width="400" height="200"></canvas>
-      <button onclick="clearSignature()">Clear</button>
-      <button onclick="downloadSignature()">Download</button>
+      <button class="btn btn-secondary" onclick="clearSignature()">
+        Clear
+      </button>
+      <button class="btn btn-primary" onclick="downloadSignature()">
+        Download
+      </button>
     </div>
   </body>
   <script src="./script.js"></script>
