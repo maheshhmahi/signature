@@ -41,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
 
+    ctx.fillStyle = '#ffffff';  // white color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Reset the path
+    ctx.beginPath();
+
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
